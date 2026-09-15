@@ -1,0 +1,57 @@
+BANK MARKETING - TERM DEPOSIT CLASSIFICATION - MODEL ANALYSIS
+======================================================================
+
+Dataset size (after cleaning): 11162 rows, 16 columns
+Duplicate rows removed during cleaning: 0
+
+PREPROCESSING SUMMARY
+----------------------------------------------------------------------
+- Missing values: numerical columns imputed with median, categorical columns imputed with most frequent value.
+- Categorical variables encoded with OneHotEncoder (handle_unknown='ignore').
+- Numerical variables standardised with StandardScaler.
+- Preprocessing was fitted only on the training set to avoid data leakage into the test set.
+- Target encoded as: no -> 0, yes -> 1.
+
+CLASS DISTRIBUTION
+----------------------------------------------------------------------
+Majority-to-minority class ratio: 1.11 : 1
+
+MODEL RESULTS
+----------------------------------------------------------------------
+   Classifier  Accuracy  Precision   Recall  F1_Score
+Decision Tree  0.813256   0.808470 0.793951  0.801144
+  Naive Bayes  0.720107   0.783748 0.565217  0.656782
+    KNN (K=7)  0.822212   0.828203 0.788280  0.807748
+
+BEST CLASSIFIER
+----------------------------------------------------------------------
+Best Classifier: KNN (K=7)
+'KNN (K=7)' achieved the highest F1-score (0.8077) among the three classifiers, indicating the strongest balance between precision (0.8282) and recall (0.7883) for identifying customers who subscribed to the term deposit. Its accuracy was 0.8222.
+
+TOP FEATURES (Decision Tree importance)
+----------------------------------------------------------------------
+         Feature  Importance
+        duration    0.576494
+poutcome_success    0.151413
+ contact_unknown    0.134929
+     housing_yes    0.034433
+       month_mar    0.031011
+      housing_no    0.019922
+         balance    0.017237
+           pdays    0.009537
+       month_apr    0.005932
+       month_may    0.005609
+
+IMPORTANT OBSERVATIONS
+----------------------------------------------------------------------
+- The 'duration' column (last call duration) is known only
+  AFTER a call takes place, so a model using it cannot be
+  used to decide who to call BEFORE the call happens. It is
+  kept in this academic exercise because the assignment asks
+  for a general classification comparison, but this caveat
+  should be mentioned when discussing real-world deployment.
+- Decision Tree feature importance reflects contribution to
+  the tree's splits, not proof of a causal relationship.
+- Accuracy alone can be misleading when classes are
+  imbalanced, which is why precision, recall and F1-score
+  were reported for every model.
